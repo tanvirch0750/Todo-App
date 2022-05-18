@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import auth from "../Firebase.init";
 
 const TaskForm = ({ refetch }) => {
@@ -27,9 +28,8 @@ const TaskForm = ({ refetch }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         reset();
-        alert("Task added successfully");
+        toast.success(`Task added successfully.`);
         refetch();
       });
   };

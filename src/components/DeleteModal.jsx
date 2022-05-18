@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 
 const DeleteModal = ({ deleteModal, refetch, setDeleteModal }) => {
   const { _id, name } = deleteModal;
@@ -10,6 +11,7 @@ const DeleteModal = ({ deleteModal, refetch, setDeleteModal }) => {
       .then((res) => res.json())
       .then((data) => {
         setDeleteModal(null);
+        toast.error(`Task deleted`);
         refetch();
       });
   };

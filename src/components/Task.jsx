@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const Task = ({ task, setDeleteModal }) => {
   const { name, description } = task;
@@ -7,8 +8,8 @@ const Task = ({ task, setDeleteModal }) => {
 
   const handleComplete = () => {
     setLineThrough(true);
-    alert(`Congratulations you completed "${name}" task`);
     setDisable(true);
+    toast.success(`You successfully completed "${name}" task`);
   };
 
   return (
