@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import {
-  useCreateUserWithEmailAndPassword,
-  useSignInWithGoogle,
-  useUpdateProfile,
+   useCreateUserWithEmailAndPassword,
+   useSignInWithGoogle,
+   useUpdateProfile
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -68,7 +68,7 @@ const Signup = () => {
                   },
                 })}
                 type="text"
-                placeholder="Your Email"
+                placeholder="Your Name"
                 className="input input-bordered w-full mt-1"
               />
               {errors.name?.type === "required" && (
