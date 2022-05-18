@@ -65,7 +65,7 @@ const Login = () => {
     if (user || gUser) {
       navigate(from, { replace: true });
     }
-  }, [user, from, navigate]);
+  }, [user, gUser, from, navigate]);
 
   if (loading || gLoading) {
     return <h1>Loading..</h1>;
@@ -73,7 +73,7 @@ const Login = () => {
 
   return (
     <section className="min-h-[calc(100vh-80px)] flex justify-center items-center">
-      <div className="card w-96 bg-base-100 shadow-lg">
+      <div className="card w-96 bg-neutral shadow-lg">
         <div className="card-body">
           <h2 className="text-center text-2xl text-accent capitalize font-bold">
             Login
