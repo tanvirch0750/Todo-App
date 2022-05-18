@@ -31,11 +31,11 @@ const DeleteModal = ({ deleteModal, refetch, setDeleteModal }) => {
           <div className="modal-action">
             <button
               onClick={() => handleDelete(_id)}
-              className="btn btn-error text-white"
+              className="btn btn-error btn-md text-white"
             >
               delete
             </button>
-            <label htmlFor="delete-modal" className="btn">
+            <label htmlFor="delete-modal" className="btn btn-md btn-accent">
               Cancel
             </label>
           </div>

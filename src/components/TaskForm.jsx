@@ -17,8 +17,6 @@ const TaskForm = ({ refetch }) => {
       description: data.description,
       email: user.email,
     };
-    console.log(taskData);
-    console.log(data);
 
     fetch("http://localhost:5000/tasks", {
       method: "POST",
