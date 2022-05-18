@@ -4,7 +4,7 @@ const DeleteModal = ({ deleteModal, refetch, setDeleteModal }) => {
   const { _id, name } = deleteModal;
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/tasks/${id}`, {
+    fetch(`https://protected-wave-67044.herokuapp.com/tasks/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

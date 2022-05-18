@@ -18,7 +18,7 @@ const TaskForm = ({ refetch }) => {
       email: user.email,
     };
 
-    fetch("http://localhost:5000/tasks", {
+    fetch("https://protected-wave-67044.herokuapp.com/tasks", {
       method: "POST",
       headers: {
         "content-type": "application/json",

@@ -15,9 +15,9 @@ const Home = () => {
     data: tasks,
     refetch,
   } = useQuery("availableAppointment", () =>
-    fetch(`http://localhost:5000/tasks?email=${user.email}`).then((res) =>
-      res.json()
-    )
+    fetch(
+      `https://protected-wave-67044.herokuapp.com/tasks?email=${user.email}`
+    ).then((res) => res.json())
   );
 
   if (isLoading) {
