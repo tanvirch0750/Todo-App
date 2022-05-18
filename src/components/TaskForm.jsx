@@ -1,14 +1,39 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import auth from "../Firebase.init";
 
-const TaskForm = () => {
+const TaskForm = ({ refetch }) => {
+  const [user, loading] = useAuthState(auth);
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm({});
   const onSubmit = async (data) => {
+    const taskData = {
+      name: data.name,
+      description: data.description,
+      email: user.email,
+    };
+    console.log(taskData);
     console.log(data);
+
+    fetch("http://localhost:5000/tasks", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(taskData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        reset();
+        alert("Task added successfully");
+        refetch();
+      });
   };
   return (
     <div className="py-16">
