@@ -7,7 +7,7 @@ import TaskForm from "../components/TaskForm";
 import auth from "../Firebase.init";
 
 const Home = () => {
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [deleteModal, setDeleteModal] = useState(null);
   const {
     isLoading,
