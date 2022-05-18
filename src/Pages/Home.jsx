@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
+import DeleteModal from "../components/DeleteModal";
 import Task from "../components/Task";
 import TaskForm from "../components/TaskForm";
 import auth from "../Firebase.init";
 
 const Home = () => {
   const [user, loading] = useAuthState(auth);
+  const [deleteModal, setDeleteModal] = useState(null);
   const {
     isLoading,
     error,
@@ -21,7 +23,7 @@ const Home = () => {
   if (isLoading) {
     return <h1>Loading..</h1>;
   }
-  console.log(tasks);
+
   return (
     <section className="py-24 lg:container lg:mx-auto px-5 lg:px-0">
       <h1 className="text-center text-4xl font-medium text-accent">
@@ -30,8 +32,8 @@ const Home = () => {
       <TaskForm refetch={refetch} />
       <div className="">
         <h2 className="text-center text-4xl font-medium text-accent">Tasks</h2>
-        <div class="overflow-x-auto mt-8">
-          <table class="table w-full lg:max-w-5xl lg:mx-auto">
+        <div className="overflow-x-auto mt-8">
+          <table className="table w-full lg:max-w-5xl lg:mx-auto">
             <thead className="bg-accent">
               <tr className="bg-accent text-neutral">
                 <th className="bg-accent text-bold">Name</th>
@@ -42,10 +44,22 @@ const Home = () => {
             </thead>
             <tbody>
               {tasks.map((task) => (
-                <Task key={task._id} task={task} />
+                <Task
+                  key={task._id}
+                  task={task}
+                  setDeleteModal={setDeleteModal}
+                  refetch={refetch}
+                />
               ))}
             </tbody>
           </table>
+          {deleteModal && (
+            <DeleteModal
+              deleteModal={deleteModal}
+              refetch={refetch}
+              setDeleteModal={setDeleteModal}
+            />
+          )}
         </div>
       </div>
     </section>

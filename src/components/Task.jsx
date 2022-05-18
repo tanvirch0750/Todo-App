@@ -1,7 +1,8 @@
 import React from "react";
 
-const Task = ({ task }) => {
+const Task = ({ task, setDeleteModal }) => {
   const { name, description } = task;
+
   return (
     <tr className="bg-neutral">
       <td className="bg-neutral">{name}</td>
@@ -12,9 +13,13 @@ const Task = ({ task }) => {
         </button>
       </td>
       <td className="bg-neutral">
-        <button className="btn btn-sm bg-error text-gray-900 hover:text-white">
+        <label
+          onClick={() => setDeleteModal(task)}
+          htmlFor="delete-modal"
+          className="btn btn-sm bg-error text-gray-900 hover:text-white"
+        >
           Delete
-        </button>
+        </label>
       </td>
     </tr>
   );
