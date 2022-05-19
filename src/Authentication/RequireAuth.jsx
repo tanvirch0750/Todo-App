@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Navigate, useLocation } from "react-router-dom";
+import Loader from "../components/Loader";
 import auth from "../Firebase.init";
 
 const RequireAuth = ({ children }) => {
@@ -8,7 +9,7 @@ const RequireAuth = ({ children }) => {
   const location = useLocation();
 
   if (loading) {
-    return <h1>Loading..</h1>;
+    return <Loader />;
   }
 
   if (!user) {

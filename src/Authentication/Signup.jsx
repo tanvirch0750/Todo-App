@@ -6,6 +6,7 @@ import {
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 import auth from "../Firebase.init";
 import useToken from "../Hooks/useToken";
 
@@ -43,7 +44,7 @@ const Signup = () => {
   }, [token, from, navigate]);
 
   if (loading || gLoading || updating) {
-    return <h1>Loading...</h1>;
+    return <Loader />;
   }
 
   if (error || gError || updateError) {

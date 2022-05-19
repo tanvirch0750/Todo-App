@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "../components/DeleteModal";
+import Loader from "../components/Loader";
 import Task from "../components/Task";
 import TaskForm from "../components/TaskForm";
 import auth from "../Firebase.init";
@@ -37,7 +38,7 @@ const Home = () => {
   );
 
   if (isLoading) {
-    return <h1>Loading..</h1>;
+    return <Loader />;
   }
 
   return (
