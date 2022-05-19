@@ -1,6 +1,8 @@
+import { signOut } from "firebase/auth";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import DeleteModal from "../components/DeleteModal";
 import Task from "../components/Task";
 import TaskForm from "../components/TaskForm";
@@ -9,6 +11,7 @@ import auth from "../Firebase.init";
 const Home = () => {
   const [user] = useAuthState(auth);
   const [deleteModal, setDeleteModal] = useState(null);
+  const navigate = useNavigate();
   const {
     isLoading,
     error,
@@ -16,8 +19,21 @@ const Home = () => {
     refetch,
   } = useQuery("availableAppointment", () =>
     fetch(
-      `https://protected-wave-67044.herokuapp.com/tasks?email=${user.email}`
-    ).then((res) => res.json())
+      `https://protected-wave-67044.herokuapp.com/tasks?email=${user.email}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    ).then((res) => {
+      if (res.status === 401 || res.status === 403) {
+        localStorage.removeItem("accessToken");
+        signOut(auth);
+        navigate("/login");
+      }
+      return res.json();
+    })
   );
 
   if (isLoading) {

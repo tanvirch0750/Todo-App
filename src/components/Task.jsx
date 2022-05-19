@@ -1,14 +1,29 @@
+import { signOut } from "firebase/auth";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import auth from "../Firebase.init";
 
 const Task = ({ task, setDeleteModal, refetch }) => {
   const { _id, name, description } = task;
+  const navigate = useNavigate();
 
   const handleComplete = () => {
     fetch(`https://protected-wave-67044.herokuapp.com/tasks/${_id}`, {
       method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          localStorage.removeItem("accessToken");
+          signOut(auth);
+          navigate("/login");
+        }
+        return res.json();
+      })
       .then((data) => {
         if (data.modifiedCount > 0) {
           refetch();

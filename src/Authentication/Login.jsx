@@ -7,6 +7,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../Firebase.init";
+import useToken from "../Hooks/useToken";
 
 const Login = () => {
   const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
@@ -20,6 +21,7 @@ const Login = () => {
     watch,
     handleSubmit,
   } = useForm({});
+  const [token] = useToken(user || gUser);
 
   let errorMessage;
 
@@ -62,10 +64,10 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (user || gUser) {
+    if (token) {
       navigate(from, { replace: true });
     }
-  }, [user, gUser, from, navigate]);
+  }, [token, from, navigate]);
 
   if (loading || gLoading) {
     return <h1>Loading..</h1>;

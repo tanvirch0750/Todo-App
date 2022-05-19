@@ -1,14 +1,28 @@
+import { signOut } from "firebase/auth";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import auth from "../Firebase.init";
 
 const DeleteModal = ({ deleteModal, refetch, setDeleteModal }) => {
   const { _id, name } = deleteModal;
+  const navigate = useNavigate();
 
   const handleDelete = (id) => {
     fetch(`https://protected-wave-67044.herokuapp.com/tasks/${id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          localStorage.removeItem("accessToken");
+          signOut(auth);
+          navigate("/login");
+        }
+        return res.json();
+      })
       .then((data) => {
         setDeleteModal(null);
         toast.error(`Task deleted`);

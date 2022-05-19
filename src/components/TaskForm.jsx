@@ -1,11 +1,14 @@
+import { signOut } from "firebase/auth";
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import auth from "../Firebase.init";
 
 const TaskForm = ({ refetch }) => {
   const [user, loading] = useAuthState(auth);
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -23,10 +26,18 @@ const TaskForm = ({ refetch }) => {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
       body: JSON.stringify(taskData),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === 401 || res.status === 403) {
+          localStorage.removeItem("accessToken");
+          signOut(auth);
+          navigate("/login");
+        }
+        return res.json();
+      })
       .then((data) => {
         reset();
         toast.success(`Task added successfully.`);
